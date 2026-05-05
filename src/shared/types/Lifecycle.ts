@@ -1,7 +1,11 @@
-// A Unity-like lifecycle interface for components in a game engine or application framework. This interface defines optional methods that can be implemented by components to hook into different stages of their lifecycle, such as initialization, starting, updating, and destruction. The methods are designed to be called by the framework at appropriate times during the component's lifecycle.
+/// <summary>
+/// The Lifecycle interface defines the structure for objects that have a lifecycle in a Roblox game. It includes optional methods for initialization (onInit), starting (onStart), updating (onUpdate), and destruction (onDestroy). Classes that implement this interface can define their own behavior for each of these lifecycle stages, allowing for consistent management of game components.
+/// </summary> <remarks>
+/// This interface is designed to be implemented by various classes in a Roblox game, such as controllers, services, or other components that need to perform specific actions during different stages of their lifecycle. By implementing the Lifecycle interface, you can ensure that your classes have a standardized way of handling initialization, updates, and cleanup.
+/// </remarks>
 export interface Lifecycle {
-	OnInit?(): void;
-	OnStart?(): void;
-	OnUpdate?(dt: number): void;
+	onInit?(): void;
+	onStart?(): void;
+	onUpdate?(dt: number): void;
 	onDestroy?(): void;
 }
