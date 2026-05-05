@@ -1,3 +1,8 @@
-import { makeHello } from "shared/module";
+import { ClientRuntime } from "./framework/ClientRuntime";
+import { DemoClientController } from "./controllers/DemoClientController";
 
-print(makeHello("main.client.ts"));
+const runtime = new ClientRuntime();
+
+runtime.register(new DemoClientController());
+
+runtime.start();

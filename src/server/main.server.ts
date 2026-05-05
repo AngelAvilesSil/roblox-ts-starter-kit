@@ -1,3 +1,8 @@
-import { makeHello } from "shared/module";
+import { ServerRuntime } from "./framework/ServerRuntime";
+import { DemoServerService } from "./services/DemoServerService";
 
-print(makeHello("main.server.ts"));
+const runtime = new ServerRuntime();
+
+runtime.register(new DemoServerService());
+
+runtime.start();
