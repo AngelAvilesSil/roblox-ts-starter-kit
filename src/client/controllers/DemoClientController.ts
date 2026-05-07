@@ -1,4 +1,6 @@
 import { ClientController } from "client/framework/ClientController";
+import { Network } from "shared/networking/Network";
+import { RoundState } from "shared/types/RoundTypes";
 import { Logger } from "shared/utils/Logger";
 
 /// <summary>
@@ -11,11 +13,24 @@ export class DemoClientController implements ClientController {
 
 	private readonly logger = new Logger(this.Name);
 
-	onInit() {
-		this.logger.info("Initializing DemoClientController...");
+	// The onInit method is called when the controller is initialized. In this implementation, it logs a message indicating that the controller has been initialized and sets up event listeners for server events "RoundStateChanged" and "ScoreChanged". When these events are received from the server, it logs the new round state and score information. You can modify this method to include any logic that should occur when the controller initializes, such as setting up additional event listeners or initializing client-side state.
+	public onInit() {
+		this.logger.info("Initialized");
+
+		Network.client.on("RoundStateChanged", (state: RoundState) => {
+			this.logger.info(`Round state changed: ${state.phase} (${state.timeRemaining}s remaining)`);
+		});
+
+		Network.client.on("ScoreChanged", (userId, score) => {
+			this.logger.info(`Score changed: userId=${userId}, score=${score}`);
+		});
 	}
 
-	onStart() {
-		this.logger.info("Starting DemoClientController...");
+	// The onStart method is called when the controller is started. In this implementation, it logs a message indicating that the controller has started and sends a request to the server to join the round using the Network utility. You can modify this method to include any logic that should occur when the controller starts, such as sending additional requests to the server or initializing client-side state based on user input or other factors.
+	public onStart() {
+		this.logger.info("Started");
+		this.logger.info("Requesting to join round");
+
+		Network.client.fire("RequestJoinRound");
 	}
 }

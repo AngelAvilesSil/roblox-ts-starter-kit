@@ -1,4 +1,6 @@
 import { ServerService } from "server/framework/ServerService";
+import { Network } from "shared/networking/Network";
+import { RoundState } from "shared/types/RoundTypes";
 import { Logger } from "shared/utils/Logger";
 
 /// <summary>
@@ -11,11 +13,25 @@ export class DemoServerService implements ServerService {
 
 	private readonly logger = new Logger(this.Name);
 
-	onInit() {
-		this.logger.info("Initializing DemoServerService...");
+	// The onInit method is called when the service is initialized. In this implementation, it simply logs a message indicating that the service has been initialized. You can add any setup logic or initialization code that your service requires within this method.
+	public onInit() {
+		this.logger.info("Initialized");
 	}
 
-	onStart() {
-		this.logger.info("Starting DemoServerService...");
+	// The onStart method is called when the service is started. In this implementation, it logs a message indicating that the service has started and sets up an event listener for a client event called "RequestJoinRound". When a player requests to join the round, it logs the player's name and sends them the current round state and their score using the Network utility. You can modify this method to include any logic that should occur when the service starts, such as setting up additional event listeners or initializing game state.
+	public onStart() {
+		this.logger.info("Started");
+
+		Network.server.on("RequestJoinRound", (player) => {
+			this.logger.info(`${player.Name} requested to join the round.`);
+
+			const roundState: RoundState = {
+				phase: "Waiting",
+				timeRemaining: 10,
+			};
+
+			Network.server.fire(player, "RoundStateChanged", roundState);
+			Network.server.fire(player, "ScoreChanged", player.UserId, 0);
+		});
 	}
 }
