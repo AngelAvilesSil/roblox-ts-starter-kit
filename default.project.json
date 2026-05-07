@@ -1,5 +1,5 @@
 {
-	"name": "roblox-ts-game",
+	"name": "roblox-ts-starter-kit",
 	"globIgnorePaths": ["**/package.json", "**/tsconfig.json"],
 	"tree": {
 		"$className": "DataModel",
@@ -37,12 +37,6 @@
 			"$className": "Workspace",
 			"$properties": {
 				"FilteringEnabled": true
-			}
-		},
-		"HttpService": {
-			"$className": "HttpService",
-			"$properties": {
-				"HttpEnabled": true
 			}
 		},
 		"SoundService": {
