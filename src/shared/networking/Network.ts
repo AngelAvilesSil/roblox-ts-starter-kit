@@ -14,6 +14,13 @@ class NetworkServer {
 	private folder?: Folder;
 
 	// Listen for an event from the client. Use this for events that the client will fire to the server, such as player actions.
+	public initialize() {
+		this.getOrCreateRemote(NetworkConstants.ClientToServer.RequestJoinRound);
+		this.getOrCreateRemote(NetworkConstants.ClientToServer.RequestScorePoint);
+		this.getOrCreateRemote(NetworkConstants.ServerToClient.RoundStateChanged);
+		this.getOrCreateRemote(NetworkConstants.ServerToClient.ScoreChanged);
+	}
+
 	public on(eventName: ClientToServerEventName, handler: (player: Player) => void) {
 		const remote = this.getOrCreateRemote(eventName);
 		return remote.OnServerEvent.Connect((player) => {

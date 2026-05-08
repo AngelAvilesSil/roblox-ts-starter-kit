@@ -9,18 +9,19 @@ import { Logger } from "shared/utils/Logger";
 /// This class is intended to be used in a Roblox game server environment, where you can create various services that perform different tasks, such as handling player data, managing game state, or processing game logic. By using the DemoServerService as a starting point, you can easily create your own server services with customized behavior while maintaining a consistent structure and logging format.
 /// </remarks>
 export class DemoServerService implements ServerService {
-	public readonly Name = "DemoServerService";
+	public readonly name = "DemoServerService";
 
-	private readonly logger = new Logger(this.Name);
+	private readonly logger = new Logger(this.name);
 
 	// The onInit method is called when the service is initialized. In this implementation, it simply logs a message indicating that the service has been initialized. You can add any setup logic or initialization code that your service requires within this method.
 	public onInit() {
-		this.logger.info("Initialized");
+		Network.server.initialize();
+		this.logger.info("Initialized.");
 	}
 
 	// The onStart method is called when the service is started. In this implementation, it logs a message indicating that the service has started and sets up an event listener for a client event called "RequestJoinRound". When a player requests to join the round, it logs the player's name and sends them the current round state and their score using the Network utility. You can modify this method to include any logic that should occur when the service starts, such as setting up additional event listeners or initializing game state.
 	public onStart() {
-		this.logger.info("Started");
+		this.logger.info("Started.");
 
 		Network.server.on("RequestJoinRound", (player) => {
 			this.logger.info(`${player.Name} requested to join the round.`);
